@@ -133,33 +133,109 @@ double = 54 digits for decimal + 10 bits for fractional
 #include <iostream>
 using namespace std;
 
+class Flight { };
+class CommercialFlight : public  Flight { };
+
+void fun() {
+	cout<<"\nthis is  fun function";
+}
+
+float average(int i, int j, int k) {
+	cout<<"\nthis is average function";
+	return (i+j+k) /3.0;
+}
+
 int main() {
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
-	char gender='M';
+	char gender='T';
 	int num=179;
 	float rate=4.8;
 	double distance=98383.8;
 
+	float (*ptr7) (int,int,int);
+	fun();
+
+	ptr7 = &average;
+
+	float ans = ptr7(4,6,7);
+	cout<<"\nAVerage : "<<ans;
+
+	//pointer declaration cum initialization
+	char   *ptr1 = &gender;
+	int    *ptr2 = &num;
+	float  *ptr3 = &rate;
+	double *ptr4 = &distance;
+
+	void	(*ptr5) ();
+
+	ptr5 = &fun;
+
+	ptr5(); // are we invoking a function?? YES
+
+//	Flight *ptr;
+
+	// ptr = new Flight();
+	// ptr->fly();
+
+	// ptr = new CommercialFlight();
+
+	// ptr->fly();
+
+
+	//if your create a pointer
+	//then u must take care of its initialization
+
+
+	char name[80]="Bismar Alejandro Alvarado Garcia";
+
+	printf("\n[%c]",name[3]);
+	printf("\nfull   [%s]",name);
+	printf("\nsecond [%c]",name[7]);
+	printf("\nsecond [%s]",&name[7]);
+
+	printf("\nsecond [%c]",name[0]);
+	printf("\nsecond [%c]",name[7]);
+	printf("\nsecond [%c]",name[17]);
+	printf("\nsecond [%s]",&name[26]);
+
+
+	printf("\n[%u]",&name);
+
+	printf("\n[%u]",&gender);
+	printf("\n[%u]",&num);
+	printf("\n[%u]",&rate);
+	printf("\n[%u]",&distance);
+
+	cout<<"\ngender        : "<<gender;
+	cout<<"\ngender        : "<<*&gender;
+	cout<<"\ngender        : "<<*ptr1;
+	cout<<"\nsizeof gender : "<<sizeof(gender);
+	cout<<"\nsizeof ptr1   : "<<sizeof(ptr1);
+	cout<<"\nstored at     : "<<(void*)&gender<<endl;
+
 
 	cout<<"\nnum        : "<<num;
 	cout<<"\nnum        : "<<*&num; //* - valueAt     & - memory address of num
+	cout<<"\nnum        : "<<*ptr2;
 	cout<<"\nsizeof num : "<<sizeof(num);
+	cout<<"\nsizeof ptr2: "<<sizeof(ptr2);
 	cout<<"\nstored at  : "<<&num<<endl;
 
-
-	cout<<"\gender         : "<<gender;
-	cout<<"\nsizeof gender : "<<sizeof(gender);
-	cout<<"\nstored at     : "<<&gender<<endl;
-
-
 	cout<<"\nrate        : "<<rate;
+	cout<<"\nrate        : "<<*&rate;
+	cout<<"\nrate        : "<<*ptr3;
 	cout<<"\nsizeof rate : "<<sizeof(rate);
+	cout<<"\nsizeof ptr3 : "<<sizeof(ptr3);
 	cout<<"\nstored at   : "<<&rate<<endl;
 
 
 	cout<<"\ndistance        : "<<distance;
+	cout<<"\ndistance        : "<<*&distance;
+	cout<<"\ndistance        : "<<*ptr4;
 	cout<<"\nsizeof distance : "<<sizeof(distance);
+	cout<<"\nsizeof ptr4     : "<<sizeof(ptr4);
 	cout<<"\nstored at       : "<<&distance<<endl;
 
 	return 0;
-}
+} // 1000 gb Hard disk  3000 square feet house
+
