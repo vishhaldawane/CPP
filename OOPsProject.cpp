@@ -26,6 +26,25 @@ well what is the purpose this the ctor!!!!
 
 
 */
+// Point2D, x and y <-- BASE
+// Point3D, will hold x, y, z <-- DERIVED - child
+// ColouredPoint3D, will hold x,y,z, and color in "Red" etc <-- CHILD OF THE CHILD
+
+/*
+class Flight
+{
+	int flightNumber;
+	char flightName[20];
+	char source[20];
+	char destination[20];
+	int seats;
+
+public:
+	Flight(int flno, char )
+
+};*/
+
+
 
 //GENERALIZATION
 class Person
@@ -38,7 +57,7 @@ class Person
 	private:
 		char gender;    // 4 -- field / data member
 		int  age;		// 4
-		char name[20];  // 20
+		char name[20];  // 20  MyString name;
 
 	public:
 		/*Person() {
@@ -152,9 +171,38 @@ public:
 //Employee to be created as a child of Student
 //with empno, company, salary
 
+class MyString // good news is that we have the String class in STL
+{
+	private:
+		char *array;
+		int len;
+
+	public:
+		MyString(char name[]) {
+			len = strlen(name);
+			array = new char[ len ]; // Dynamic Memory Allocation
+			strcpy(array,name);
+		}
+		char* getString() {
+			return array;
+		}
+		int length() {
+			return len;
+		}
+		//u can calculate subString(3); 3rd  till end - char* subString(int start)
+		//u can calculate subString(3,6); till 6th position - char* subString(int start, int end)
+		//convert the array into uppercase - char* toUpper() { }
+		//convert the array into lowercase - char* toLower() { }
+
+};
 
 int main() {
-	cout << "!!!OOPS CONCEPTS!!!" << endl; // prints !!!Hello World!!!
+	MyString str("Bismar");
+	cout<<"\nstr : "<<str.getString();
+	cout<<"\nstr : "<<str.length();
+
+
+	cout << "\n\n!!!OOPS CONCEPTS!!!" << endl; // prints !!!Hello World!!!
 
 	Person p1('F');
 	Person p2('M',27,"Bismar");
