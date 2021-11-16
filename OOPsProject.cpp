@@ -36,17 +36,27 @@ class Person
 	//how does  it look like...Person() { }
 
 	private:
-		char gender;    // 4
+		char gender;    // 4 -- field / data member
 		int  age;		// 4
 		char name[20];  // 20
 
 	public:
-		Person() {
+		/*Person() {
 			cout<<"\nPerson()....";
 			age=0;
 			name[0]='\0';
 			gender='\a';
+		}*/
+
+					// <--- local variables ---->
+		Person(char gender, int age, char name[]) {
+				cout<<"\nPerson(char,int,char[])....";
+				this->age=age;
+				strcpy(this->name,name);
+				this->gender=gender;
 		}
+
+
 		void printPerson() {
 			cout<<"\ngender : "<<gender;
 			cout<<"\nAge    : "<<age;
@@ -86,11 +96,15 @@ private:// 3 fields are inherited(28) from the base
 	char grade;			//4 (1)
 
 public:
-	Student() {//internally invoking base class ctor
+	//constructor for 'Student' must explicitly
+	//initialize the base class 'Person' which
+	//does not have a default constructor
+
+	Student(char gender, int age, char name[], int rollNumber,float totalMarks, char grade) : Person(gender,age,name) {//internally invoking base class ctor
 		cout<<"\n\tStudent()";
-		rollNumber=0;
-		totalMarks=0;
-		grade='\a';
+		this->rollNumber=rollNumber;
+		this->totalMarks=totalMarks;
+		this->grade=grade;
 	}
 	void printStudent() {
 		Person::printPerson(); //invoke super class method/ base class method/function
@@ -108,9 +122,9 @@ public:
 int main() {
 	cout << "!!!OOPS CONCEPTS!!!" << endl; // prints !!!Hello World!!!
 
-	Person p1;
-	Person p2;
-	Person p3;
+	Person p1('M',43,"Vishhal");
+	Person p2('M',27,"Bismar");
+	Person p3('F',33,"Swathi");
 
 	cout<<"\nsize of p1 : "<<sizeof(p1);
 
@@ -119,9 +133,9 @@ int main() {
 	p2.printPerson();
 	p3.printPerson();
 
-	Student s1;
-	Student s2;
-	Student s3;
+	Student s1('M',22,"Jack",455,99.0,'A');
+	Student s2('F',23,"Jane",355,98.0,'B');
+	Student s3('M',21,"Jill",155,97.0,'C');
 
 	cout<<"\nsize of s1 : "<<sizeof(s1);
 
