@@ -56,6 +56,22 @@ class Person
 				this->gender=gender;
 		}
 
+		Person(char gender) {
+				cout<<"\nPerson(char)....";
+				this->age=0;
+				this->gender=gender;
+				strcpy(this->name,"\0");
+
+		}
+
+		Person(char gender, int age) {
+				cout<<"\nPerson(char,int)....";
+				this->age=age;
+				this->gender=gender;
+				strcpy(this->name,"\0");
+
+		}
+
 
 		void printPerson() {
 			cout<<"\ngender : "<<gender;
@@ -64,6 +80,17 @@ class Person
 			cout<<"\n----------";
 		}
 
+	void setAge(int age) {
+		this->age = age;
+	}
+
+	void setGender(char gender) {
+		this->gender = gender;
+	}
+
+	void setName(char name[]) {
+		strcpy(this->name, name);
+	}
 };
 /*
  * 		|		|
@@ -106,6 +133,13 @@ public:
 		this->totalMarks=totalMarks;
 		this->grade=grade;
 	}
+
+	Student(char gender,  int rollNumber) : Person(gender) {//internally invoking base class ctor
+			cout<<"\n\tStudent()";
+			this->rollNumber=rollNumber;
+			this->totalMarks=0;
+			this->grade='\a';
+	}
 	void printStudent() {
 		Person::printPerson(); //invoke super class method/ base class method/function
 		cout<<"\nRoll   : "<<rollNumber;
@@ -122,9 +156,9 @@ public:
 int main() {
 	cout << "!!!OOPS CONCEPTS!!!" << endl; // prints !!!Hello World!!!
 
-	Person p1('M',43,"Vishhal");
+	Person p1('F');
 	Person p2('M',27,"Bismar");
-	Person p3('F',33,"Swathi");
+	Person p3('F',33);
 
 	cout<<"\nsize of p1 : "<<sizeof(p1);
 
@@ -133,7 +167,12 @@ int main() {
 	p2.printPerson();
 	p3.printPerson();
 
-	Student s1('M',22,"Jack",455,99.0,'A');
+	p1.setAge(22);
+	p1.setName("Julia");
+	p1.printPerson();
+
+
+	Student s1('M',455);
 	Student s2('F',23,"Jane",355,98.0,'B');
 	Student s3('M',21,"Jill",155,97.0,'C');
 
