@@ -83,7 +83,7 @@ class HybridEngine : public PetrolEngine, public CNGEngine
 	}
 };
 
-
+/*
 int main() {
 	cout << "!!!Hello Engines!!!" << endl; // prints !!!Hello World!!!
 
@@ -114,20 +114,259 @@ int main() {
 
 	return 0;
 }
+*/
 
 /*
-
-
-
- 	 	 	 	 	 	 Engine
+ 	 	I. 	 	 	 Engine
 						|startEngine()
 			-----------------------------
 			|							|
+ 	 	PetrolEngine					CNGEngine
+ 	 	    |startPetrolEngine()		|startCNGEngine()
+
+
+ 	 	II.
+
  	 	PetrolEngine					CNGEngine
  	 		|startPetrolEngine()		|startCNGEngine()
  	 		+---------------------------+
  	 				|
  	 			HybridEngine
 					startHybridEngine()
+
+		III.
+
+ 	 	 	 	 	 Engine
+						|startEngine()
+						|enoNumber, company, capacity
+						|
+			-----------------------------
+virtual		|			|				|  virtual
+ 	 	PetrolEngine	|				CNGEngine
+ 	 		|size		|				|size
+ 	 		|startPetrolEngine()		|startCNGEngine()
+ 	 		+---------------------------+
+ 	 					|
+ 	 				HybridEngine
+					startHybridEngine()
+
+
  */
+
+
+
+class Animal
+{
+
+	int age;
+public:
+
+	Animal() {
+		cout<<"\nAnimal()";
+		age=0;
+	}
+
+	//we have to make below method as overridden
+	virtual void breathing() {// virtual methods are only the overridden methods
+		cout<<"\nAnimal breathing...";
+	}
+
+	virtual ~Animal() {
+		cout<<"\n~Animal() virtual destructor...";
+	}
+
+};
+
+class Fish : virtual  public Animal
+{
+
+	int waterLevel;
+public:
+
+	Fish() {
+		cout<<"\nFish()";
+		waterLevel=100; //feet
+	}
+	~Fish() {
+			cout<<"\n~Fish()";
+
+	}
+	void breathing() {
+		cout<<"\nFish is breathing..via gills....";
+	}
+	void swim() {
+		cout<<"\nFish is swimming...";
+	}
+};
+
+class Mammal : virtual public Animal
+{
+
+	int jumpLength;
+public:
+
+	Mammal() {
+		cout<<"\nMammal()";
+		jumpLength=10; //feet
+	}
+	~Mammal() {
+			cout<<"\n~Mammal()";
+
+	}
+
+	//overiding
+	void breathing() {//this method should hide its parent's method
+		cout<<"\nMammal is breathing..via gills....";
+	}
+	void walk() {
+		cout<<"\nMammal is walking...";
+	}
+};
+
+
+class MammalFish :public Mammal, public Fish
+{
+	int numberOfKids;
+
+public:
+
+	MammalFish() {
+		cout<<"\nMammalFish()";
+		numberOfKids=100; //whale kids
+	}
+	~MammalFish() {
+			cout<<"\n~MammalFish()";
+
+	}
+	void breathing() {
+		cout<<"\nMammalFish is breathing..via gills....";
+	}
+	void giveBirth() {
+		cout<<"\nMammalFish is giving birth....";
+	}
+	void oceanicFilter() {
+		cout<<"\nA Whale is an oceanic filter....";
+	}
+	void walk() {
+			cout<<"\nMammal is swamming......";
+		}
+	/*void printValues() {
+		cout<<"\nAge   : "<<age;
+		cout<<"\njump  : "<<jumpLength;
+		cout<<"\nKids  : "<<numberOfKids;
+		cout<<"\nWater : "<<waterLevel;
+
+	}*/
+};
+
+
+class Zoo
+{
+public:
+	void lookAtTheAnimalsBreathing(Animal *ptr) {
+		//some common code here for ptr->pointed object
+		ptr->breathing();
+		//ptr->swim();
+		delete ptr;
+		cout<<"\n-----------";
+	}
+};//RTTI - RunTime Type Identification
+int main() {
+
+	Zoo zoo;
+	zoo.lookAtTheAnimalsBreathing(new Fish);
+	zoo.lookAtTheAnimalsBreathing(new Mammal);
+	zoo.lookAtTheAnimalsBreathing(new MammalFish);
+	zoo.lookAtTheAnimalsBreathing(new Animal);
+
+}
+
+/*int main() {
+
+	Animal animal;
+	animal.breathing();
+
+	cout<<"\n----------";
+
+	Fish fish;
+	fish.breathing();
+	fish.swim();
+
+	cout<<"\n--------";
+
+	Mammal mammal;
+	mammal.breathing();
+	mammal.walk();
+
+	cout<<"\n--------";
+
+	MammalFish whale;
+	whale.breathing();
+	whale.giveBirth();
+	whale.oceanicFilter();
+	whale.swim();
+	whale.walk();
+*/
+
+	/*whale.age=200;
+	whale.jumpLength=400;
+	whale.numberOfKids=20;
+	whale.waterLevel=600;
+
+	whale.printValues();*/
+
+/*
+	cout<<"\n-------";
+
+	cout<<"\nSize of Animal     : "<<sizeof(animal);
+	cout<<"\nSize of Fish       : "<<sizeof(fish);
+	cout<<"\nSize of Mammal     : "<<sizeof(mammal);
+	cout<<"\nSize of MammalFish : "<<sizeof(whale);
+
+
+	cout<<"\n--------";
+
+	Animal *ptr;
+
+		ptr = new Animal;
+
+	ptr->breathing();
+
+		ptr = new Fish;
+
+	ptr->breathing();
+
+		ptr = new Mammal;
+
+	ptr->breathing();
+
+		ptr = new MammalFish;
+
+	ptr->breathing();
+
+	return 0;
+}*/
+
+	/*
+	 *
+	 * 			Animal
+ * 					|4
+	 * 			----------
+	 * 			|		|
+	 * 			Fish	Mammal
+	 * 			|4+(4)	|4+(4)
+	 * 			+-------+
+	 * 				|
+	 * 				MammalFish
+	 * 				| 4 + 4+4+4 = 20
+	 *
+	 */
+
+
+
+
+
+
+
+
 
