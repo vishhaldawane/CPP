@@ -66,9 +66,9 @@ class BankCardReader : public Reader
 {
 	public:
 
-	void probeIt(BankCard card) {
+	void probeIt(BankCard *card) {
 		readIt();
-		cout<<"\nProbing ..."<<card.getBankName();
+		cout<<"\nProbing ..."<<card->getBankName();
 	}
 };
 
@@ -97,6 +97,14 @@ public:
 	}
 };
 
+class BankBillAndBankCard //DTO - data transfer object
+{
+public:
+		BankBill *bankBillPtr;
+		BankCard *bankCardPtr;
+
+};
+
 class BankCardMachine : public Machine //isA
 {
 	BankCardReader bankCardReader; // hasA
@@ -105,37 +113,53 @@ public:
 		BankCardMachine(int n, char mn[]) : Machine(n,mn) {
 
 		}
-		BankBill swipeIt(BankCard bankCard, float amountToTransact) {
+
+		BankBillAndBankCard swipeIt(BankCard *bankCard, float amountToTransact) {
+
+			BankBillAndBankCard billAndCard;
 
 			bankCardReader.probeIt(bankCard);
-			BankBill bankBill;
-			bankBill.setBillAmount(amountToTransact);
+			BankBill *bankBill;
+			bankBill = new BankBill; //allocation dynamically? but who will de-allocate it ????
+
+			bankBill->setBillAmount(amountToTransact);
 			cout<<"\n======= B A N K  B I L L =======";
-				cout<<"\nBank Name   : "<<bankCard.getBankName();
+				cout<<"\nBank Name   : "<<bankCard->getBankName();
 			cout<<"\n--------------------------------";
 				char array[20];
 				//the system generated date of the bill
-				strcpy(array,bankCard.getCardNumber());
+				strcpy(array,bankCard->getCardNumber());
 				//bank account holder name which is stored in the card
 				//
 				printf("\nCard Number : **** **** **** %s",&array[12]); //13 14 15 16
-				 cout<<"\nAmount      : "<<bankBill.getBillAmount();
+				 cout<<"\nAmount      : "<<bankBill->getBillAmount();
 			cout<<"\n--------------------------------";
-			return bankBill;
+			billAndCard.bankBillPtr = bankBill; //its the pointer assigned to another pointer
+			billAndCard.bankCardPtr = bankCard; //its the object
+			return billAndCard;
 		}
 };
+
 
 
 int main() {
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
 
 	BankCardMachine bankCardMachine(123,"Google");
-	BankCard myBankCard;
-	myBankCard.setBankName("Standard Chartered");
-	myBankCard.setCardNumber("1234567887653458");
+	BankCard *myBankCard = new BankCard;
+	myBankCard->setBankName("Standard Chartered");
+	myBankCard->setCardNumber("1234567887653458");
 	float amountToTransact=400;
 
-	BankBill bankBill = bankCardMachine.swipeIt(myBankCard, amountToTransact);
-	cout<<"\nBill amount verified is : "<<bankBill.getBillAmount();
+	BankBillAndBankCard billAndCard = bankCardMachine.swipeIt(myBankCard, amountToTransact);
+	cout<<"\nBill amount verified is : "<<billAndCard.bankBillPtr->getBillAmount();
+	cout<<"\nCard Bank : "<<billAndCard.bankCardPtr->getBankName();
+
+	cout<<"\nbefore delete: bankBill "<<billAndCard.bankBillPtr;
+
+	delete billAndCard.bankBillPtr; //de-allocate here
+	billAndCard.bankBillPtr = NULL;
+	cout<<"\nafter  : bankBill "<<billAndCard.bankBillPtr;
+
 	return 0;
 }
