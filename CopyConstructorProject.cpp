@@ -59,7 +59,7 @@ class Kite
 		KiteBetting *kiteBetting; //hasA - now its not an object, rather its a pointer to point to a memory location
 
 	public:
-		Kite(int kiteNumber, char kiteColor[], char kiteOwner[], int kiteLength)
+		Kite(int kiteNumber=0, char kiteColor[]="\0", char kiteOwner[]="\0", int kiteLength=0)
 		{
 			  cout<<"\nKite(int,char[],char[],int) constructor....";
 			  this->kiteNumber=kiteNumber;
@@ -74,7 +74,7 @@ class Kite
 
 		//but below constructor is doing custom allocation
 
-		Kite(Kite &ref)
+		Kite(Kite &ref) //  Kite kite4(kite1);
 		{
 			  cout<<"\nKite(Kite&) copy constructor....";
 			  this->kiteNumber=ref.kiteNumber;
@@ -83,6 +83,19 @@ class Kite
 			  this->kiteLength=ref.kiteLength;
 			  kiteBetting=new KiteBetting; //this is deep cloning, allocation of a new KiteBetting and NOT BITMASKING by the default copy constructor
 			  kiteBetting->setKiteBetting(100, 150, 300, 30,"Beginner");
+		}
+
+		Kite&  operator =(Kite &ref) // Kite kite4;  kite4=kite1;
+		{
+			Kite temp;
+			  cout<<"\n=(Kite&) copy assignment operator....";
+			  temp.kiteNumber=ref.kiteNumber;
+			  strcpy(temp.kiteColor,ref.kiteColor);
+			  strcpy(temp.kiteOwner,ref.kiteOwner);
+			  temp.kiteLength=ref.kiteLength;
+			  temp.kiteBetting=new KiteBetting; //this is deep cloning, allocation of a new KiteBetting and NOT BITMASKING by the default copy constructor
+			  temp.kiteBetting->setKiteBetting(100, 150, 300, 30,"Beginner");
+			  return temp;
 		}
 
 		virtual ~Kite() {
@@ -125,7 +138,10 @@ int main() {
 //	theKite3.printKite();
 
 
-	Kite theKite4 (theKite1); //default copy constructor Kite(Kite&) that takes object itself as an argument
+	Kite theKite4; //(theKite1); //so first create the object
+
+	//and then assign the object
+	theKite4 = theKite1; //default copy constructor Kite(Kite&) that takes object itself as an argument
 	theKite4.printKite();
 
 
