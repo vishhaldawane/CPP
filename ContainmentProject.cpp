@@ -73,6 +73,13 @@ public:
 	}
 };
 
+//a week 20 hours
+
+//1(4) 2(4) 3(4) 4(4) 5(4)    14th hour
+
+//5 days programs - C++   8 hours per day
+
+
 //Car is the "whole" entity
 class Car : public Vehicle //isA
 {
