@@ -27,6 +27,8 @@ public:
 		bettingCost=0;
 		level=NULL;
 	}
+
+
 	virtual ~KiteBetting() {
 		cout<<"\n~KiteBetting() destructor...";
 		delete level;
@@ -46,6 +48,30 @@ public:
 		cout<<"\nBettng Cost : "<<bettingCost<<"\t stored at : "<<&bettingCost;
 		cout<<"\nBetting lvl : "<<level <<"\Stored at : "<<&level;
 		cout<<"\n----------------";
+	}
+
+	float getBettingCost() const {
+		return bettingCost;
+	}
+
+	int getHighScore() const {
+		return highScore;
+	}
+
+	char* getLevel() const {
+		return level;
+	}
+
+	void setLevel(char *lvl) {
+		level = lvl;
+	}
+
+	int getLowScore() const {
+		return lowScore;
+	}
+
+	int getMidScore() const {
+		return midScore;
 	}
 };
 // A C++ DEVELOPER HAS TO FOCUS ON 1.SYSTEM LEVEL ACTIVITIES + 2. DOMAIN LEVEL ACTIVITIES
@@ -120,6 +146,48 @@ class Kite
 			kiteBetting->printBettingCost();
 			cout<<"\n---------------------";
 		}
+
+		Kite& add(Kite kiteRef) {
+			Kite temp;
+			temp.kiteNumber = kiteNumber + kiteRef.kiteNumber;
+
+
+			/*strcat(temp.kiteOwner,kiteOwner);
+			strcat(temp.kiteOwner,kiteRef.kiteOwner);
+
+			strcat(temp.kiteColor,kiteColor);
+			strcat(temp.kiteColor,kiteRef.kiteColor);
+			strcat(temp.kiteColor,"its Green");  */  //RedBlue its Green
+
+			temp.kiteLength = kiteLength + kiteRef.kiteLength;
+			temp.kiteNumber = kiteNumber + kiteRef.kiteNumber;
+			temp.kiteNumber = kiteNumber + kiteRef.kiteNumber;
+
+			temp.kiteBetting=new KiteBetting; //this is deep cloning, allocation of a new KiteBetting and NOT BITMASKING by the default copy constructor
+
+			int lowScore=kiteBetting->getLowScore() + kiteRef.kiteBetting->getLowScore();
+			int midScore=kiteBetting->getMidScore() + kiteRef.kiteBetting->getMidScore();
+			int highScore=kiteBetting->getHighScore()+ kiteRef.kiteBetting->getHighScore();
+			int bettingCost=kiteBetting->getBettingCost() + kiteRef.kiteBetting->getBettingCost();
+
+			/*int len = strlen(kiteBetting->getLevel()) + strlen(kiteRef.kiteBetting->getLevel());
+
+
+			temp.kiteBetting->setLevel(new char[ len ] );
+
+			int len1 = strlen(temp.kiteBetting->getLevel());
+			char *tempChar = new char [ len1 ];
+
+
+			strcat(tempChar,kiteBetting->getLevel());
+			strcat(tempChar,kiteRef.kiteBetting->getLevel());
+			temp.kiteBetting->setLevel(tempChar);
+
+			temp.kiteBetting->setKiteBetting(lowScore, midScore, highScore, bettingCost, tempChar );
+*/
+
+			return temp;
+		}
 };
 
 int main() {
@@ -127,6 +195,13 @@ int main() {
 
 	Kite theKite1(101,"Red","Bismar",170);
 	theKite1.printKite();
+
+	Kite theKite2(102,"Blue","Vishhal",230);
+	theKite2.printKite();
+
+	Kite theKite3 = theKite1.add(theKite2);
+	theKite3.printKite();
+
 	//theKite1.setKite(102, "Blue", "Alvarado",60);
 	//theKite1.printKite();
 
@@ -138,11 +213,11 @@ int main() {
 //	theKite3.printKite();
 
 
-	Kite theKite4; //(theKite1); //so first create the object
+//	Kite theKite4; //(theKite1); //so first create the object
 
 	//and then assign the object
-	theKite4 = theKite1; //default copy constructor Kite(Kite&) that takes object itself as an argument
-	theKite4.printKite();
+//	theKite4 = theKite1; //default copy constructor Kite(Kite&) that takes object itself as an argument
+//	theKite4.printKite();
 
 
 
