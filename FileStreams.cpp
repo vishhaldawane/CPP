@@ -111,11 +111,60 @@ public:
 		cout<<"\nBank Account Number  : "<<bankAccountNumber;
 		cout<<"\nBank Account Holder  : "<<bankAccountHolder;
 		cout<<"\nBank Account Balance : "<<bankAccountBalance;
-
+		cout<<"\n====================";
 	}
+	friend ostream& operator<<(ostream &out, BankAccount &ba);
+	friend istream& operator>>(istream &in, BankAccount &ba);
+
 };
 
-void serializeIt(BankAccount baObj) {
+ ostream& operator<<(ostream &out, BankAccount &ba)
+ {
+	 cout<<"\nserializing...";
+	 out<<ba.bankAccountNumber<<"\n"<<ba.bankAccountHolder<<"\n"<<ba.bankAccountBalance<<endl;
+	 return out;
+ }
+
+ istream& operator>>(istream &in, BankAccount &ba)
+ {
+	 cout<<"\nde-serializing...";
+	 in>>ba.bankAccountNumber;
+	 in>>ba.bankAccountHolder;
+	 in>>ba.bankAccountBalance;
+	 return in;
+ }
+
+ int main() {
+
+ 	BankAccount baObj1(102,"Jane",6000);
+ 	BankAccount baObj2(103,"Julie",7000);
+ 	BankAccount baObj3(104,"Julia",8000);
+
+ 	ofstream fout("banking.data");
+ 	fout<<baObj1;
+ 	fout<<baObj2;
+ 	fout<<baObj3;
+
+ 	cout<<"\n====================";
+
+ 	BankAccount baObj4;
+	BankAccount baObj5;
+	BankAccount baObj6;
+
+ 	ifstream fin("banking.data");
+ 	fin >> baObj4;
+ 	fin >> baObj5;
+ 	fin >> baObj6;
+
+ 	baObj4.printBankAccount();
+ 	baObj5.printBankAccount();
+ 	baObj6.printBankAccount();
+
+
+ 	return 0;
+ }
+
+/*void serializeIt(BankAccount baObj) {  //  <<
 	cout << "!!! File Handling !!!"<< endl; // prints !!!Hello World!!!
 		ofstream file("bankobjects.dat",ios::app);
 
@@ -130,7 +179,7 @@ void serializeIt(BankAccount baObj) {
 		cout<<"\nFile is closed...";
 }
 
-void deSerializeIt() {
+void deSerializeIt() { // >>  operator friend
 	cout << "!!! File Handling !!!"<< endl; // prints !!!Hello World!!!
 		ifstream file("bankobjects.dat",ios::in);
 		//BankAccount baObj;
@@ -166,6 +215,8 @@ int main() {
 
 	return 0;
 }
+*/
+
 
 
 /*
