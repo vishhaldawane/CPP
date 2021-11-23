@@ -63,7 +63,7 @@ using namespace std;
  */
 
 
-
+/*
 void writeToAFile()
 {
 	ofstream fout;
@@ -87,9 +87,119 @@ void writeToAFile()
 	fout.close();
 	cout<<"\nFile is closed..";
 
+}*/
+
+void serializeTheObject()
+{
+
 }
-int main() {
+
+class BankAccount
+{
+private:
+	int bankAccountNumber;
+	string bankAccountHolder;
+	float bankAccountBalance;
+public:
+
+	BankAccount(int ba=0, string bah="", float bab=0.0) {
+		bankAccountNumber=ba;
+		bankAccountHolder = bah;
+		bankAccountBalance=bab;
+	}
+	void printBankAccount() {
+		cout<<"\nBank Account Number  : "<<bankAccountNumber;
+		cout<<"\nBank Account Holder  : "<<bankAccountHolder;
+		cout<<"\nBank Account Balance : "<<bankAccountBalance;
+
+	}
+};
+
+void serializeIt(BankAccount baObj) {
 	cout << "!!! File Handling !!!"<< endl; // prints !!!Hello World!!!
-	writeToAFile();
+		ofstream file("bankobjects.dat",ios::app);
+
+		baObj.printBankAccount();
+
+		cout<<"\ntrying to serialize the object...";
+		file.write((char*)&baObj, sizeof(baObj));
+		cout<<"\nObject is serialized....";
+
+
+		file.close();
+		cout<<"\nFile is closed...";
+}
+
+void deSerializeIt() {
+	cout << "!!! File Handling !!!"<< endl; // prints !!!Hello World!!!
+		ifstream file("bankobjects.dat",ios::in);
+		//BankAccount baObj;
+		BankAccount *baObj = new BankAccount;
+
+		cout<<"\ntrying to de-serialize the object...";
+		while(file.read((char*)baObj, sizeof(class BankAccount))) {
+
+			baObj->printBankAccount();
+			cout<<"\nbaObj "<<baObj;
+			baObj = new BankAccount;
+			cout<<"\n-----------";
+		}
+			cout<<"\nObject is de-serialized....";
+
+
+		file.close();
+		cout<<"\nFile is closed...";
+}
+
+int main() {
+
+	BankAccount baObj1(102,"Jane",6000);
+	BankAccount baObj2(103,"Julie",7000);
+	BankAccount baObj3(104,"Julia",8000);
+
+	//serializeIt(baObj1);
+	//serializeIt(baObj2);
+	//serializeIt(baObj3);
+
+	deSerializeIt();
+	//deSerializeIt();
+
 	return 0;
 }
+
+
+/*
+ *
+ *
+ *
+ * 	Serialization
+ * 		chopping the object bytes
+ * 		in series of bytes on a file
+ *
+ *
+ * 	Persistence
+ * 		storing the object
+ * 		on the database table as
+ * 		a row
+ *
+ * 		ODBC
+ *
+ * 		C++ <--Driver-> MSSQL Server
+ *
+ *
+ *
+ * 	BankAccount
+ * 		private:
+ * 			accountNumber
+ * 			accountHolder;
+ * 			accountBalance;
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
